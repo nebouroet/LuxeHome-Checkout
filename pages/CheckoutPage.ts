@@ -48,11 +48,12 @@ export class CheckoutPage {
         await this.zipInput.fill(zip);
     }
     async selectCountry(country: string) {
-        await this.countrySelect.selectOption(country);
-    }
-    async selectState(state: string) {
-        await this.stateSelect.selectOption(state);
-    }
+    await this.countrySelect.selectOption({ label: country });
+}
+
+async selectState(state: string) {
+    await this.stateSelect.selectOption({ label: state });
+}
     async checkShippingMethod(option: string) {
         await this.page.getByTestId(option).click();
     }
