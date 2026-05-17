@@ -1,40 +1,38 @@
 import { test, expect } from '@playwright/test';
-import { AuthPage } from '../pages/AuthPage';
 import { ProductPage } from '../pages/ProductPage';
 import { CartPage } from '../pages/CartPage';
-import {CheckoutPage} from '../pages/CheckoutPage';
-    
+import { CheckoutPage } from '../pages/CheckoutPage';
+import { LoginPage } from '../pages/LoginPage';
 
-test.describe ('Checkout flow for logged-in users validation', () => {
+test.describe ('Checkout flow for logged in users validation', () => {
 
-    let authPage: AuthPage;
+
+    let loginPage: LoginPage;
   let productPage: ProductPage;
   let cartPage: CartPage;
   let checkoutPage: CheckoutPage;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach( async ({ page }) => {
 
-    authPage = new AuthPage(page);
+    loginPage = new LoginPage(page);
     productPage = new ProductPage(page);
     cartPage = new CartPage(page);
     checkoutPage = new CheckoutPage(page);
 
     await page.goto('https://daristr.github.io/luxehome-qa/#/');
 
-     await authPage.goToSignIn();
-        await authPage.register ('potato potato', 'potato@potato.com', 'potato');
-        await productPage.shopNowBtn.click();
-        await productPage.openProduct('Nordic Comfort Sofa in light');
-        await productPage.addToCart();
-        await productPage.cartNav.click();
-        await cartPage.checkout();
+    await loginPage.Login('nebouroet@email.com', '123456');
+
+    await productPage.shopNowBtn.click();
+    await productPage.openProduct('Nordic Comfort Sofa in light');
+    await productPage.addToCart();
+    await productPage.cartNav.click();
+    await cartPage.checkout();
   });
 
-    test('User can fill out the checkout form and place an order', async ({ page }) => {
+    test('Logged in user can fill out the checkout form and place an order', async ({ page }) => {
 
-    
-
-        const checkoutPage = new CheckoutPage(page);
+         const checkoutPage = new CheckoutPage(page);
 
         await page.goto('https://daristr.github.io/luxehome-qa/#/checkout');
 
@@ -48,5 +46,8 @@ test.describe ('Checkout flow for logged-in users validation', () => {
 
      await checkoutPage.placeOrderBtn.click()
 
-    }) 
+     await expect(page.getByRole('heading', { name: 'Order Confirmed!' })).toBeVisible();
+    })
 })
+
+

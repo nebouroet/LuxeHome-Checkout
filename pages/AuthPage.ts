@@ -1,7 +1,7 @@
 import { BasePage } from './BasePage';
 
 export class AuthPage extends BasePage {
-  // Registration Locators
+
   readonly goToRegisterLink = this.page.getByTestId('link-go-to-register');
   readonly nameInput = this.page.getByTestId('input-register-name');
   readonly emailInput = this.page.getByTestId('input-register-email');
