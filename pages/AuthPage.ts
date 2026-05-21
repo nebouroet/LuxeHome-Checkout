@@ -2,7 +2,7 @@ import { BasePage } from './BasePage';
 
 export class AuthPage extends BasePage {
 
-  readonly goToRegisterLink = this.page.getByTestId('link-go-to-register');
+  readonly goToRegisterLink = this.page.getByTestId('btn-nav-register');
   readonly nameInput = this.page.getByTestId('input-register-name');
   readonly emailInput = this.page.getByTestId('input-register-email');
   readonly passwordInput = this.page.getByTestId('input-register-password');

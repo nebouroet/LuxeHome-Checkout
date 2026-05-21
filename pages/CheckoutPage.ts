@@ -1,5 +1,21 @@
 import {Locator, Page, expect} from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import AxeBuilder from '@axe-core/playwright';
+
+const WCAG_TAGS = [
+    'wcag2a', 
+    'wcag2aa',
+     'wcag22a',
+      'wcag22aa',
+       'contrast',
+        'focus-visible',
+         'heading-order',
+          'best-practice',
+            'en-301-549',
+             'aria',
+              'keyboard',
+              'image-alt',
+        ] as const;
 
 export class CheckoutPage {
     readonly page: Page;
@@ -35,7 +51,11 @@ export class CheckoutPage {
         this.cvvInput = page.getByTestId('input-cvv');
         this.placeOrderBtn = page.getByTestId('btn-place-order');
     }
-
+    async runAccessibilityScan() {
+        return new AxeBuilder({ page: this.page })
+            .withTags([...WCAG_TAGS])
+            .analyze();
+    }
     async fillContactInfo( firstName: string, lastName: string, phone: string) {
         await this.firstNameInput.fill(firstName);
         await this.lastNameInput.fill(lastName);
