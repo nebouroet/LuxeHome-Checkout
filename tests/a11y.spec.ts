@@ -3,6 +3,7 @@ import { AuthPage } from '../pages/AuthPage';
 import { ProductPage } from '../pages/ProductPage';
 import { CartPage } from '../pages/CartPage';
 import {CheckoutPage} from '../pages/CheckoutPage';
+import { ConfirmationPage } from '../pages/ConfirmationPage';
 
 
 test.describe('Accessibility Scan Checkout', () => {
@@ -32,7 +33,7 @@ test.beforeEach(async ({ page }) => {
   });
 
 
-    test('should have no accessibility violations', async ({ page }) => {
+    test('Checkout page should have no accessibility violations', async ({ page }) => {
 
 
         const scanResults = await checkoutPage.runAccessibilityScan();
@@ -45,3 +46,19 @@ test.beforeEach(async ({ page }) => {
     });
 
 });
+
+test('Confirmation page should have no accessibility violations', async ({ page }) => {
+
+    const confirmationPage = new ConfirmationPage(page);
+
+    await page.goto('https://daristr.github.io/luxehome-qa/#/confirmation');
+
+     const scanResults = await confirmationPage.runAccessibilityScan();
+
+        if (scanResults.violations.length > 0) {
+            console.log(JSON.stringify(scanResults.violations, null, 2));
+        }
+
+        expect(scanResults.violations).toEqual([]);
+    });
+

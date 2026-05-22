@@ -29,6 +29,8 @@ test.describe ('Checkout flow for registered users validation', () => {
         await productPage.addToCart();
         await productPage.cartNav.click();
         await cartPage.checkout();
+
+       
   });
 
     test('RegisteredUser can fill out the checkout form and place an order', async ({ page }) => {
@@ -48,6 +50,8 @@ test.describe ('Checkout flow for registered users validation', () => {
      await checkoutPage.fillPaymentInfo('Potato Potato', '4111111111111111', '12/34', '123');
 
      await checkoutPage.placeOrderBtn.click()
+
+      await expect(page).toHaveURL('https://daristr.github.io/luxehome-qa/#/confirmation');
 
     }) 
     
